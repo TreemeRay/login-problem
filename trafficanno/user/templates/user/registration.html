@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1>Chose account type</h1>
+    <p>Please select one of the following options:</p>
+<!--    <a href="{% url 'advert-reg' %}" class="btn btn-primary">Advertiser</a>-->
+<!--    <a href="{% url 'pub-reg' %}" class="btn btn-secondary">Publisher</a>-->
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">I'm an Advertiser</h5>
+            <p class="card-text">and I want to promote my product or CPA offer.</p>
+            <a href="{% url 'advert-reg' %}" class="btn btn-primary">Register</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">I'm a Publisher</h5>
+            <p class="card-text">and I want to monetize my website audience.</p>
+            <a href="{% url 'pub-reg' %}" class="btn btn-primary">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
