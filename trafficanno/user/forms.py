@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
+from django.contrib.auth import get_user_model, password_validation
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django.db import transaction
 from .models import AdvertiserAccount, PublisherAccount
 from django.forms import ValidationError
@@ -127,29 +127,21 @@ class PublisherSignUpForm(UserCreationForm):
         return user
 
 
-class PasswordConfirm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+class PasswordConfirm(SetPasswordForm):
 
-    class Meta:
-        model = User
-        fields = ('password1', 'password2',)
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError('Passwords do not match')
-
-        return password2
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
-        return user
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control"}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control"}),
+    )
 
 
 class EmailAuthenticationForm(AuthenticationForm):
@@ -162,3 +154,19 @@ class EmailAuthenticationForm(AuthenticationForm):
 class ForgotPasswordForm(PasswordResetForm):
     email = forms.EmailField(label="Email",
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'autocomplete': 'email'}))
+
+
+class ResetSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control"}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control"}),
+    )
