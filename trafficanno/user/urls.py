@@ -12,7 +12,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('forgot_password/', ForgotPassword.as_view(), name="forgot_password"),
     path('reset/<uidb64>/<token>/',MyPasswordResetConfirmView.as_view(template_name='user/confirmation.html'),name='confirmation'),
-    path('set/<uidb64>/<token>/',PasswordSubmit.as_view(template_name='user/password_confirm.html'),name='password_confirm'),
+    path('reset/<uidb64>/<token>/',PasswordSubmit.as_view(template_name='user/password_confirm.html'),name='password_confirm'),
     path('password-reset/complete/', PasswordResetDoneView.as_view(template_name='user/complete.html'),name='password_reset_complete'),
     path('advert-profile', AdvertProfile.as_view() , name="advert_profile"),
     path('publ-profile', PublProfile.as_view() , name="publ_profile"),

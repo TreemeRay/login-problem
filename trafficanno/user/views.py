@@ -58,9 +58,7 @@ class PublisherRegistration(CreateView):
     form_class = PublisherSignUpForm
     template_name = 'user/publ_registration.html'
 
-
     def form_valid(self, form):
-        self.form
         user = form.save()
         login(self.request, user)
         subject = 'Confirm Password'
@@ -80,12 +78,6 @@ class PublisherRegistration(CreateView):
         # messages.success(self.request, 'Mail was sent successfully!')
 
         return render(self.request, 'user/email_submitting.html')
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.user
-        return kwargs
-
 
 
 class Registration(CreateView):
