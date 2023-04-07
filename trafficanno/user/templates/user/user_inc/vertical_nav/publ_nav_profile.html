@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+    <h3><b>THETER (USDT) TRC20 EUR</b></h3>
+    <p>Wallet number: FJFNNfjdksfjnkjFJDSJN</p>
+    <hr>
+    <h3><b>CUSTOM</b></h3>
+    <p>account number: aahahahh@gmail.com - Payoner</p>
+    <hr>
+    <h3><b>Wire USD</b></h3>
+    <p>Swift: ahahhahahahhadsfsdfsdf</p>
+    <p>Comments: Moldincombank lucisii bank</p>
+    <p>Bank name: MICB</p>
+    <p>Bank adress: valea crucii</p>
+    <p>Bank country: MD</p>
+    <p>Account number: MD25MLfsdfsdfdsfsd</p>
+    <hr>
+
+    <form action="{% url 'publ_profile_form' %}" method="post" style="margin-bottom: 50px">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+    <hr>
+    <form action="{% url 'reset_pass' %}" method="post" style="margin-bottom: 50px">
+        {% csrf_token %}
+        {{ form_pass.as_p}}
+        {{ form_pass.non_field_errors }}
+        <button type="submit" class="btn btn-primary">Reset Password</button>
+    </form>
+
+
+
+
+</body>

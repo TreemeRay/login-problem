@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Line Chart Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<label for="today">Today's Date:</label>
+	<input type="text" id="today" name="today" readonly>
+
+	<script>
+		// get today's date
+		var today = new Date();
+
+		// format date as "Month Day, Year" (e.g. "March 31, 2023")
+		var options = { year: 'numeric', month: 'long', day: 'numeric' };
+		var formatted_date = today.toLocaleDateString('en-US', options);
+
+		// set value of input field to today's date
+		document.getElementById("today").value = formatted_date;
+	</script>
+  <canvas id="line-chart"></canvas>
+
+  <script>
+    var ctx = document.getElementById('line-chart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+          {
+            label: 'Profits',
+            yAxisID: 'left-y-axis',
+            data: [200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300],
+            borderColor: 'blue',
+            fill: false
+          },
+          {
+            label: 'Impressions',
+            yAxisID: 'right-y-axis',
+            data: [10000, 12000, 15000, 20000, 22000, 24000, 26000, 28000, 30000, 32000, 35000, 40000],
+            borderColor: 'red',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Monthly Profits and Impressions'
+        },
+        legend: {
+          position: 'bottom'
+        },
+        scales: {
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Month'
+            }
+          }],
+          yAxes: [
+            {
+              id: 'left-y-axis',
+              position: 'left',
+              scaleLabel: {
+                display: true,
+                labelString: 'Profits ($)'
+              }
+            },
+            {
+              id: 'right-y-axis',
+              position: 'right',
+              scaleLabel: {
+                display: true,
+                labelString: 'Impressions'
+              }
+            }
+          ]
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+
+
+
+    {% load static %}
+
+      <nav class="navbar">
+        <img
+          src="https://leadinjection.io/seo-service/wp-content/uploads/sites/7/2017/03/seo-service-logo.svg"
+          alt="logo"
+        />
+
+        <div class="right-side">
+          <div class="time item">
+            <span>EST:</span>
+            <span class="current-time">06:13:34</span>
+            <span class="current-date">27.03</span>
+          </div>
+          <div class="total-income item">
+            <p class="total-income__title">Total Income</p>
+            <p class="amount">$1934.64</p>
+          </div>
+          <div class="payout item">
+            <p class="payout__title">Available Payout</p>
+            <p class="amount">$1934.64</p>
+          </div>
+          <div class="manager-data item">
+            <img src="{% static 'media/women.jpg' %}" alt="manager-img" />
+            <div>
+              <p class="manager-data__title">Contact your manager: Lana</p>
+              <p class="manager-data__skype link">
+                Skype: <span>live:svetlash_1</span>
+              </p>
+              <p class="manager-data__email link">
+                Email: <span>svetlash@clickadu.com</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="notifications item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="24px"
+              height="24px"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="user-dropdown item">
+            <button type="button" onclick="openDropdown()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="24px"
+                height="24px"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <div class="dropdown">
+              <div class="email">sergiubravo22@gmail.com</div>
+              <button class="log-out">
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+
+                  <g id="SVGRepo_iconCarrier">
+                    <g id="Interface / Log_Out">
+                      <path
+                        id="Vector"
+                        d="M12 15L15 12M15 12L12 9M15 12H4M9 7.24859V7.2002C9 6.08009 9 5.51962 9.21799 5.0918C9.40973 4.71547 9.71547 4.40973 10.0918 4.21799C10.5196 4 11.0801 4 12.2002 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V16.8036C20 17.9215 20 18.4805 19.7822 18.9079C19.5905 19.2842 19.2837 19.5905 18.9074 19.7822C18.48 20 17.921 20 16.8031 20H12.1969C11.079 20 10.5192 20 10.0918 19.7822C9.71547 19.5905 9.40973 19.2839 9.21799 18.9076C9 18.4798 9 17.9201 9 16.8V16.75"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                  </g></svg
+                >Log out
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mobile">
+          <button class="header-mobile__burger">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+          </button>
+        </div>
+      </nav>
+
+<script>
+function openDropdown() {
+  document.querySelector(".dropdown").classList.toggle("active");
+  document.querySelector(".triangle").classList.toggle("active");
+}
+</script>

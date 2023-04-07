@@ -3,25 +3,31 @@
   <div class="col-3">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <a class="nav-link" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
-      <a class="nav-link" id="v-pills-statistics-tab" data-toggle="pill" href="#v-pills-statistics" role="tab" aria-controls="v-pills-statistics" aria-selected="false">Statistics</a>
-      <a class="nav-link" id="v-pills-sitesAndZones-tab" data-toggle="pill" href="#v-pills-sitesAndZones" role="tab" aria-controls="v-pills-sitesAndZones" aria-selected="false">Sites and zones</a>
-      <a class="nav-link" id="v-pills-payments-tab" data-toggle="pill" href="#v-pills-payments" role="tab" aria-controls="v-pills-payments" aria-selected="false">Payments</a>
-      <a class="nav-link" id="v-pills-support-tab" data-toggle="pill" href="#v-pills-support" role="tab" aria-controls="v-pills-support" aria-selected="false">Support</a>
+      <a class="nav-link" id="v-pills-campaigns-tab" data-toggle="pill" href="#v-pills-campaigns" role="tab" aria-controls="v-pills-campaigns" aria-selected="false">Campaigns</a>
+      <a class="nav-link" id="v-pills-trafficInventory-tab" data-toggle="pill" href="#v-pills-trafficInventory" role="tab" aria-controls="v-pills-trafficInventory" aria-selected="false">Traffic Inventory</a>
+      <a class="nav-link" id="v-pills-addFunds-tab" data-toggle="pill" href="#v-pills-addFunds" role="tab" aria-controls="v-pills-addFunds" aria-selected="false">Add Funds</a>
+      <a class="nav-link" id="v-pills-finance-tab" data-toggle="pill" href="#v-pills-finance" role="tab" aria-controls="v-pills-finance" aria-selected="false">Finance</a>
+      <a class="nav-link" id="v-pills-tracking-tab" data-toggle="pill" href="#v-pills-tracking" role="tab" aria-controls="v-pills-tracking" aria-selected="false">Tracking</a>
+      <a class="nav-link" id="v-pills-newsOffers-tab" data-toggle="pill" href="#v-pills-newsOffers" role="tab" aria-controls="v-pills-newsOffers" aria-selected="false">News & Offers</a>
       <a class="nav-link" id="v-pills-api-tab" data-toggle="pill" href="#v-pills-api" role="tab" aria-controls="v-pills-api" aria-selected="false">API</a>
+      <a class="nav-link" id="v-pills-tools-tab" data-toggle="pill" href="#v-pills-tools" role="tab" aria-controls="v-pills-tools" aria-selected="false">Tools</a>
       <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-      <a class="nav-link" id="v-pills-news-tab" data-toggle="pill" href="#v-pills-news" role="tab" aria-controls="v-pills-news" aria-selected="false">News</a>
+      <a class="nav-link" id="v-pills-support-tab" data-toggle="pill" href="#v-pills-support" role="tab" aria-controls="v-pills-support" aria-selected="false">Help Center</a>
     </div>
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">Dashboard</div>
-      <div class="tab-pane fade" id="v-pills-statistics" role="tabpanel" aria-labelledby="v-pills-statistics-tab">Statistics</div>
-      <div class="tab-pane fade" id="v-pills-sitesAndZones" role="tabpanel" aria-labelledby="v-pills-sitesAndZones-tab">Sites and zones</div>
-      <div class="tab-pane fade" id="v-pills-payments" role="tabpanel" aria-labelledby="v-pills-payments-tab">Payments</div>
-      <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">Support</div>
-      <div class="tab-pane fade" id="v-pills-api" role="tabpanel" aria-labelledby="v-pills-api-tab">API</div>
-      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div>
-      <div class="tab-pane fade" id="v-pills-news" role="tabpanel" aria-labelledby="v-pills-news-tab">News</div>
+      <div class="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">{% include 'user/user_inc/vertical_nav/advert_dashboard.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-campaigns" role="tabpanel" aria-labelledby="v-pills-campaigns-tab">{% include 'user/user_inc/vertical_nav/advert_campaigns.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-trafficInventory" role="tabpanel" aria-labelledby="v-pills-trafficInventory-tab">{% include 'user/user_inc/vertical_nav/advert_traffic_inventory.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-addFunds" role="tabpanel" aria-labelledby="v-pills-addFunds-tab">{% include 'user/user_inc/vertical_nav/advert_add_funds.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-finance" role="tabpanel" aria-labelledby="v-pills-finance-tab">{% include 'user/user_inc/vertical_nav/advert_finance.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-tracking" role="tabpanel" aria-labelledby="v-pills-tracking-tab">{% include 'user/user_inc/vertical_nav/advert_tracking.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-newsOffers" role="tabpanel" aria-labelledby="v-pills-newsOffers-tab">{% include 'user/user_inc/vertical_nav/advert_news_offers.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-api" role="tabpanel" aria-labelledby="v-pills-api-tab">{% include 'user/user_inc/vertical_nav/advert_api.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-tools" role="tabpanel" aria-labelledby="v-pills-tools-tab">{% include 'user/user_inc/vertical_nav/advert_tools.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">{% include 'user/user_inc/vertical_nav/advert_profile.html' %}</div>
+      <div class="tab-pane fade" id="v-pills-support" role="tabpanel" aria-labelledby="v-pills-support-tab">{% include 'user/user_inc/vertical_nav/advert_support.html' %}</div>
     </div>
   </div>
 

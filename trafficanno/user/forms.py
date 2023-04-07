@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model, password_validation
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm, \
+    PasswordChangeForm
 from django.db import transaction
 from .models import AdvertiserAccount, PublisherAccount
 from django.forms import ValidationError
@@ -15,7 +16,7 @@ class AdvertiserSignUpForm(UserCreationForm):
                                                                'rows': 3}))
     bonus_code = forms.CharField(label='Bonus code',
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
-    remember_me = forms.BooleanField(
+    agree_privacy = forms.BooleanField(
         label='I agree with my data processing and i accept Terms & Conditions and Privacy policy', required=True)
     receive_newsletter = forms.BooleanField(
         label='I agree to recieve special offers,financial,techinical and other helpful information', required=False)
@@ -74,7 +75,7 @@ class PublisherSignUpForm(UserCreationForm):
     traffic_amount = forms.ChoiceField(choices=PublisherAccount.TRAFFIC_AMOUNT,
                                        label='Daily traffic amount',
                                        widget=forms.Select(attrs={'class': 'form-control'}))
-    remember_me = forms.BooleanField(
+    agree_privacy = forms.BooleanField(
         label='I agree with my data processing and i accept Terms & Conditions and Privacy policy', required=True)
     receive_newsletter = forms.BooleanField(
         label='I agree to recieve special offers,financial,techinical and other helpful information', required=False)
@@ -113,7 +114,6 @@ class PublisherSignUpForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_publisher = True
-        user.is_active = False
         user.set_unusable_password()
         user.save()
 
@@ -128,7 +128,6 @@ class PublisherSignUpForm(UserCreationForm):
 
 
 class PasswordConfirm(SetPasswordForm):
-
     new_password1 = forms.CharField(
         label=_("New password"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
@@ -170,3 +169,59 @@ class ResetSetPasswordForm(SetPasswordForm):
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
                                           "class": "form-control"}),
     )
+
+
+class PublProfileForm(forms.ModelForm):
+    website = forms.CharField(label='Website',
+                              widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': True}))
+    traffic_amount = forms.ChoiceField(choices=PublisherAccount.TRAFFIC_AMOUNT,
+                                       label='Daily traffic amount',
+                                       widget=forms.Select(attrs={'class': 'form-control', 'disabled': True}))
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'country_of_residence', 'city',
+                  'address', 'email', 'messenger', 'messenger_nickname',)
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'country_of_residence': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'disabled': True}),
+            'messenger': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control', 'disabled': True})
+
+        }
+
+
+class AdvertProfileForm(forms.ModelForm):
+    short_desc = forms.CharField(label='Short description of your advertising campaign',
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                               'rows': 3, 'disabled': True}))
+    bonus_code = forms.CharField(label='Bonus code',
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': True}))
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'country_of_residence', 'city',
+                  'address', 'email', 'messenger', 'messenger_nickname', 'short_desc',
+                  'bonus_code')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'country_of_residence': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'disabled': True}),
+            'messenger': forms.TextInput(attrs={'class': 'form-control','disabled': True}),
+            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control','disabled': True})
+        }
+
+
+class ChangePassword(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+

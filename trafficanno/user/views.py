@@ -1,6 +1,6 @@
 from pyexpat.errors import messages
 
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, PasswordResetConfirmView
@@ -12,7 +12,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.generic import CreateView, UpdateView
 from .forms import AdvertiserSignUpForm, PublisherSignUpForm, PasswordConfirm, EmailAuthenticationForm, \
-    ForgotPasswordForm, ResetSetPasswordForm
+    ForgotPasswordForm, ResetSetPasswordForm, PublProfileForm, ChangePassword, AdvertProfileForm
 from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -161,11 +161,79 @@ class MyPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = ResetSetPasswordForm
 
 
-class AdvertProfile(CreateView):
-    def get(self, request):
-        return render(request, 'user/user_inc/advert_profile.html')
-
-
 class PublProfile(CreateView):
     def get(self, request):
-        return render(request, 'user/user_inc/publ_profile.html')
+        users_form = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'country_of_residence': request.user.country_of_residence,
+            'city': request.user.city,
+            'address': request.user.address,
+            'email': request.user.email,
+            'messenger': request.user.messenger,
+            'messenger_nickname': request.user.messenger_nickname,
+            'website': request.user.publisher.website,
+            'traffic_amount': request.user.publisher.traffic_amount
+        }
+        form = PublProfileForm(initial=users_form)
+        form_pass = ChangePassword(user=request.user, data=request.POST)
+
+        return render(request, 'user/user_inc/publ_profile.html', {'form': form, 'form_pass': form_pass})
+
+
+class AdvertProfile(CreateView):
+    def get(self, request):
+        users_form = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'country_of_residence': request.user.country_of_residence,
+            'city': request.user.city,
+            'address': request.user.address,
+            'email': request.user.email,
+            'messenger': request.user.messenger,
+            'messenger_nickname': request.user.messenger_nickname,
+            'short_desc': request.user.advertiser.short_desc,
+            'bonus_code': request.user.advertiser.bonus_code
+        }
+        form = AdvertProfileForm(initial=users_form)
+        form_pass = ChangePassword(user=request.user, data=request.POST)
+
+        return render(request, 'user/user_inc/advert_profile.html', {'form': form, 'form_pass': form_pass})
+
+
+def registered_users(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'templates/user/user_inc/vertical_nav/publ_nav_profile.html', context)
+
+
+class PublFormProfile(View):
+
+    def post(self, *args, **kwargs):
+        form = PublProfileForm(self.request.POST)
+        if form.is_valid():
+            form.save()
+
+
+class AdvertFormProfile(View):
+    def post(self, *args, **kwargs):
+        form = AdvertProfileForm(self.request.POST)
+        if form.is_valid():
+            form.save()
+
+
+class RessetPass(View):
+    def get(self, *args, **kwargs):
+        form = ChangePassword()
+        return render(self.request, 'user/user_inc/publ_profile.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = ChangePassword(data=request.POST, user=request.user)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+
+            return redirect(reverse('publ_profile'))
+        else:
+            form_errors = form.errors.as_data()
+            return render(request, 'user/user_inc/publ_profile.html', {'form': form, 'form_errors': form_errors})

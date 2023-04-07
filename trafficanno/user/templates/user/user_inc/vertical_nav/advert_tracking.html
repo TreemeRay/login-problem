@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Tracking</h1>
+    <h3>Select a conversion tracker or a CPA network.</h3>
+    <div class="picture-container">
+  <div class="picture" onclick="handleClick(1)">
+    <img src="templates/media/binom.png">
+  </div>
+  <div class="picture" onclick="handleClick(2)">
+    <img src="picture2.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(3)">
+    <img src="picture3.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(4)">
+    <img src="picture4.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(5)">
+    <img src="picture5.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(6)">
+    <img src="picture6.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(7)">
+    <img src="picture7.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(8)">
+    <img src="picture8.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(9)">
+    <img src="picture9.jpg">
+  </div>
+  <div class="picture" onclick="handleClick(10)">
+    <img src="picture10.jpg">
+  </div>
+</div>
+    <h3>Click 'Copy' to get your postback URL.</h3>
+    <input type="text" id="urlInput" value="https://example.com" readonly>
+    <button type="submit" class="btn btn-primary" onclick="copyToClipboard()">Copy URL</button>
+    <h3>Paste your postback URL to the 'Traffic Source' settings of your tracking solution or CPA network.</h3>
+
+    <script>
+      function copyToClipboard() {
+        var urlInput = document.getElementById("urlInput");
+        urlInput.select();
+        document.execCommand("copy");
+        alert("URL copied to clipboard!");
+      }
+    </script>
+
+<style>
+  .picture-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.picture {
+  margin: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.picture img {
+  max-width: 100%;
+}
+</style>
+</body>
+</html>

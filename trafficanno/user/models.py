@@ -4,7 +4,6 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
-
     country_of_residence = models.CharField(max_length=350,
                                             verbose_name='Country of residence')
     city = models.CharField(max_length=230, verbose_name='City')
@@ -24,7 +23,6 @@ class User(AbstractUser):
 
 
 class AdvertiserAccount(models.Model):
-
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE,
                                 primary_key=True,
@@ -33,6 +31,7 @@ class AdvertiserAccount(models.Model):
     short_desc = models.TextField(max_length=5000,
                                   verbose_name='Advertising campaign short description')
     bonus_code = models.CharField(max_length=350, verbose_name='Bonus code')
+    balance = models.DecimalField(default=0, max_digits=8, decimal_places=2)
 
     class Meta:
         verbose_name = 'advertiser'
@@ -43,7 +42,6 @@ class AdvertiserAccount(models.Model):
 
 
 class PublisherAccount(models.Model):
-
     TRAFFIC_AMOUNT = (
         (1, '<5k daily'),
         (2, '5-10k daily'),
@@ -58,6 +56,9 @@ class PublisherAccount(models.Model):
                                verbose_name='Website')
     traffic_amount = models.PositiveSmallIntegerField(choices=TRAFFIC_AMOUNT,
                                                       verbose_name='Daily traffic amount')
+
+    total_income = models.DecimalField(default=0, decimal_places=2, max_digits=8)
+    available_payout = models.DecimalField(default=0, decimal_places=2, max_digits=8)
 
     class Meta:
         verbose_name = 'publisher'

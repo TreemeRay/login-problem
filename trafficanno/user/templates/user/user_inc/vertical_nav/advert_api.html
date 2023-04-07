@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>API</h1>
+    <p class="alert api_alert_highlighted">Please kindly note that API can only be used to make changes to Onclick, Push-notification, Skim, Instant Text Message and Video campaigns working on the following pricing models: CPM, CPC, SmartCPM, SmartCPA.</p>
+    <p>Dear partners, this section is designed for creating requests to Advertisers' Self-Serve Platform. For correct API setup please read the manual.</p>
+    <h2>API Key</h2>
+    <p>Put this key to Authorization header of your request for authorizing to API</p>
+    <input type="text" id="urlInput" value="https://example.com" readonly>
+    <button type="submit" class="btn btn-primary" onclick="copyToClipboard()">Copy URL</button>
+    <h2>All methods require Authorization header</h2>
+    <p>[ Base URL: ssp.trafficanno.com/ ]</p>
+    <p>/api//swagger/clickadu/swagger-v2.json</p>
+    <p>This is the Clickadu API for SSP Advertisers</p>
+    <p>Terms of service</p>
+
+    <script>
+      function copyToClipboard() {
+        var urlInput = document.getElementById("urlInput");
+        urlInput.select();
+        document.execCommand("copy");
+        alert("URL copied to clipboard!");
+      }
+    </script>
+</body>
+</html>

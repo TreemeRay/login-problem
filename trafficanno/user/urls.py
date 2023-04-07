@@ -1,7 +1,9 @@
 from django.contrib.auth.views import PasswordResetDoneView
 from django.urls import path
+
 from .views import AdvertiserRegistration, PublisherRegistration, Registration, EmailSubmitting, PasswordSubmit, Login, \
-    ForgotPassword, MyPasswordResetConfirmView, AdvertProfile, PublProfile
+    ForgotPassword, MyPasswordResetConfirmView, AdvertProfile, PublProfile, PublFormProfile, RessetPass, \
+    AdvertFormProfile
 
 urlpatterns = [
     path('sign-up/advertiser/', AdvertiserRegistration.as_view(), name='advert-reg'),
@@ -16,4 +18,8 @@ urlpatterns = [
     path('password-reset/complete/', PasswordResetDoneView.as_view(template_name='user/complete.html'),name='password_reset_complete'),
     path('advert-profile', AdvertProfile.as_view() , name="advert_profile"),
     path('publ-profile', PublProfile.as_view() , name="publ_profile"),
+    path('publ_profile_form' , PublFormProfile.as_view(), name= "publ_profile_form"),
+    path('advert_profile_form', AdvertFormProfile.as_view(), name="advert_profile_form"),
+    path('reset_pass', RessetPass.as_view() , name='reset_pass')
+
 ]
