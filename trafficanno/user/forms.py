@@ -12,7 +12,7 @@ User = get_user_model()
 
 class AdvertiserSignUpForm(UserCreationForm):
     short_desc = forms.CharField(label='Short description of your advertising campaign',
-                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                 widget=forms.Textarea(attrs={'class': 'form-control',
                                                                'rows': 3}))
     bonus_code = forms.CharField(label='Bonus code',
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -33,7 +33,7 @@ class AdvertiserSignUpForm(UserCreationForm):
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'messenger': forms.TextInput(attrs={'class': 'form-control'}),
+            'messenger': forms.Select(attrs={'class': 'form-control'}),
             'messenger_nickname': forms.TextInput(attrs={'class': 'form-control'})
         }
 
@@ -91,7 +91,7 @@ class PublisherSignUpForm(UserCreationForm):
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'messenger': forms.TextInput(attrs={'class': 'form-control'}),
+            'messenger': forms.Select(attrs={'class': 'form-control'}),
             'messenger_nickname': forms.TextInput(attrs={'class': 'form-control'})
         }
 
@@ -127,20 +127,25 @@ class PublisherSignUpForm(UserCreationForm):
         return user
 
 
-class PasswordConfirm(SetPasswordForm):
+class PasswordConfirm(forms.Form):
     new_password1 = forms.CharField(
-        label=_("New password"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
-                                          "class": "form-control"}),
-        strip=False,
-        help_text=password_validation.password_validators_help_text_html(),
+        label=_("Set Password"),
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
     new_password2 = forms.CharField(
-        label=_("New password confirmation"),
+        label=_("Confirm Password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
-                                          "class": "form-control"}),
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError("Passwords don't match")
+        return cleaned_data
 
 
 class EmailAuthenticationForm(AuthenticationForm):
@@ -173,10 +178,10 @@ class ResetSetPasswordForm(SetPasswordForm):
 
 class PublProfileForm(forms.ModelForm):
     website = forms.CharField(label='Website',
-                              widget=forms.TextInput(attrs={'class': 'form-control', 'disabled': True}))
+                              widget=forms.TextInput(attrs={'class': 'form-control'}))
     traffic_amount = forms.ChoiceField(choices=PublisherAccount.TRAFFIC_AMOUNT,
                                        label='Daily traffic amount',
-                                       widget=forms.Select(attrs={'class': 'form-control', 'disabled': True}))
+                                       widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
@@ -189,8 +194,8 @@ class PublProfileForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'disabled': True}),
-            'messenger': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
-            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control', 'disabled': True})
+            'messenger': forms.TextInput(attrs={'class': 'form-control'}),
+            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control'})
 
         }
 
@@ -214,8 +219,8 @@ class AdvertProfileForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'disabled': True}),
-            'messenger': forms.TextInput(attrs={'class': 'form-control','disabled': True}),
-            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control','disabled': True})
+            'messenger': forms.TextInput(attrs={'class': 'form-control', 'disabled': True}),
+            'messenger_nickname': forms.TextInput(attrs={'class': 'form-control', 'disabled': True})
         }
 
 

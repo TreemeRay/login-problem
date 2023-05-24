@@ -2,37 +2,40 @@
 
 
     {% load static %}
+<header>
 
-      <nav class="navbar">
+    <div class="my-navbar" >
         <img
-          src="https://leadinjection.io/seo-service/wp-content/uploads/sites/7/2017/03/seo-service-logo.svg"
-          alt="logo"
+         src="https://trafficano.tech/wp-content/uploads/2023/04/logoo-3-e1682073350362.png"
+         alt="logo"
+         style="margin-left: 220px; width: 10%; height: 10%;"
         />
+
 
         <div class="right-side">
           <div class="time item">
             <span>EST:</span>
-            <span class="current-time">06:13:34</span>
-            <span class="current-date">27.03</span>
+            <span class="current-time"></span>
+            <span class="current-date"></span>
           </div>
           <div class="total-income item">
-            <p class="total-income__title">Total Income</p>
-            <p class="amount">$1934.64</p>
+            <div class="total-income__title">Total Income</div>
+            <div class="amount">{{ request.user.publisher.total_income }}$</div>
           </div>
           <div class="payout item">
-            <p class="payout__title">Available Payout</p>
-            <p class="amount">$1934.64</p>
+            <div class="payout__title">Available Payout</div>
+            <div class="amount">{{ request.user.publisher.available_payout }}$</div>
           </div>
           <div class="manager-data item">
             <img src="{% static 'media/women.jpg' %}" alt="manager-img" />
             <div>
-              <p class="manager-data__title">Contact your manager: Lana</p>
-              <p class="manager-data__skype link">
+              <div class="manager-data__title">Contact your manager: Lana</div>
+              <div class="manager-data__skype link">
                 Skype: <span>live:svetlash_1</span>
-              </p>
-              <p class="manager-data__email link">
+              </div>
+              <div class="manager-data__email link">
                 Email: <span>svetlash@clickadu.com</span>
-              </p>
+              </div>
             </div>
           </div>
 
@@ -69,8 +72,8 @@
             </button>
 
             <div class="dropdown">
-              <div class="email">sergiubravo22@gmail.com</div>
-              <button class="log-out">
+              <div class="email">{{ request.user.email }}</div>
+              <a class="log-out" href="{% url 'logout' %}">
                 <svg
                   width="24px"
                   height="24px"
@@ -99,7 +102,7 @@
                     </g>
                   </g></svg
                 >Log out
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -110,11 +113,30 @@
             <div class="burger-line"></div>
           </button>
         </div>
-      </nav>
+      </div>
+</header>
 
 <script>
 function openDropdown() {
   document.querySelector(".dropdown").classList.toggle("active");
   document.querySelector(".triangle").classList.toggle("active");
 }
+</script>
+
+<script>
+  function updateTime() {
+    // Get the current date and time
+    var now = new Date();
+
+    // Get the elements where the current date and time will be displayed
+    var timeElem = document.querySelector('.current-time');
+    var dateElem = document.querySelector('.current-date');
+
+    // Set the text content of the elements to the current date and time
+    timeElem.textContent = now.toLocaleTimeString();
+    dateElem.textContent = now.toLocaleDateString();
+  }
+
+  // Call the updateTime function every second
+  setInterval(updateTime, 1000);
 </script>

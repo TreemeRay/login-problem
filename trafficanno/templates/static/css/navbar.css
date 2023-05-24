@@ -1,8 +1,8 @@
 body {
   font-family: sans-serif;
+  margin: 0 !important;
 }
-
-.navbar {
+.my-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,16 +72,14 @@ body {
 
 .dropdown {
   display: none;
-
-  content: "";
-  position: fixed;
-  top: 60px;
-  right: 15px;
-  margin-top: -3px;
+  position: absolute;
+  top: 100%; /* Adjust the vertical position as needed */
+  right: 0;
   background: #fff;
   box-shadow: -4px 14px 31px 5px rgba(34, 60, 80, 0.2);
   padding: 10px 10px;
 }
+
 
 .log-out {
   display: flex;

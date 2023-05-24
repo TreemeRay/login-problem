@@ -1,101 +1,147 @@
-<!--<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark fixed-top">-->
-<!--    <div class="container-fluid">-->
-<!--        <a class="navbar-brand" href="">Trafficanno</a>-->
-<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"-->
-<!--                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--        </button>-->
-<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--            <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-
-
- <div class="li-header header-style-1 header-fixed" style="top: 0">
 
 
 
+    {% load static %}
+<header>
 
-        <nav class="nav-bar">
+    <div class="my-navbar">
+
+        <img
+         src="https://trafficano.tech/wp-content/uploads/2023/04/logoo-3-e1682073350362.png"
+         alt="logo"
+         style="margin-left: 220px; width: 10%; height: 10%;"
+        />
+
+        <div class="right-side">
+          <div class="total-income item">
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+              + Create Campaign
+            </button>
+          </div>
+
+          <div class="time item">
+            <span>EST:</span>
+            <span class="current-time"></span>
+            <span class="current-date"></span>
+          </div>
+
+          <div class="payout item">
+            <div class="payout__title">Balance</div>
+            <div class="amount">{{ request.user.advertiser.balance }}$</div>
+          </div>
+          <div class="manager-data item">
+            <img src="{% static 'media/women.jpg' %}" alt="manager-img" />
+            <div>
+              <div class="manager-data__title">Contact your manager: Lana</div>
+              <div class="manager-data__skype link">
+                Skype: <span>live:svetlash_1</span>
+              </div>
+              <div class="manager-data__email link">
+                Email: <span>svetlash@clickadu.com</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="notifications item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="24px"
+              height="24px"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <div class="user-dropdown item">
+            <button type="button" onclick="openDropdown()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                width="24px"
+                height="24px"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <div class="dropdown">
+              <div class="email">{{ request.user.email }}</div>
+              <a class="log-out" href="{% url 'logout' %}">
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+
+                  <g id="SVGRepo_iconCarrier">
+                    <g id="Interface / Log_Out">
+                      <path
+                        id="Vector"
+                        d="M12 15L15 12M15 12L12 9M15 12H4M9 7.24859V7.2002C9 6.08009 9 5.51962 9.21799 5.0918C9.40973 4.71547 9.71547 4.40973 10.0918 4.21799C10.5196 4 11.0801 4 12.2002 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V16.8036C20 17.9215 20 18.4805 19.7822 18.9079C19.5905 19.2842 19.2837 19.5905 18.9074 19.7822C18.48 20 17.921 20 16.8031 20H12.1969C11.079 20 10.5192 20 10.0918 19.7822C9.71547 19.5905 9.40973 19.2839 9.21799 18.9076C9 18.4798 9 17.9201 9 16.8V16.75"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                  </g></svg
+                >Log out
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="mobile">
+          <button class="header-mobile__burger">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+          </button>
+        </div>
+      </div>
+
+</header>
+
+<script>
+function openDropdown() {
+  document.querySelector(".dropdown").classList.toggle("active");
+  document.querySelector(".triangle").classList.toggle("active");
+}
+</script>
 
 
-<!-- begin "mega_main_menu" -->
-<div id="primary" class="mega_main_menu primary primary_style-flat icons-left first-lvl-align-right first-lvl-separator-none direction-horizontal fullwidth-disable pushing_content-disable mobile_minimized-enable dropdowns_trigger-hover dropdowns_animation-anim_2 include-search include-woo_cart no-buddypress responsive-enable coercive_styles-disable indefinite_location_mode-disable language_direction-ltr version-2-2-1 logo-desktop logo-sticky logo-mobile mega_main">
-	<div class="menu_holder">
-	<div class="mmm_fullwidth_container"></div><!-- class="fullwidth_container" -->
-		<div class="menu_inner" role="navigation">
-			<span class="nav_logo">
-				<a class="logo_link" href="https://trafficano.tech" title="SEO optimizator">
-					<img src="https://leadinjection.io/seo-service/wp-content/uploads/sites/7/2017/03/seo-service-logo.svg" alt="SEO optimizator" />
-				</a>
-				<span class="mobile_toggle" data-target="#main_ul-primary" aria-expanded="false" aria-controls="main_ul-primary">
-					<span class="mobile_button">
-						MENU &nbsp;
-						<span class="symbol_menu">&equiv;</span>
-						<span class="symbol_cross">&#x2573;</span>
-					</span><!-- class="mobile_button" -->
-				</span><!-- /class="mobile_toggle" -->
-			</span><!-- /class="nav_logo" -->
-				<ul id="main_ul-primary" class="mega_main_menu_ul" role="menubar" aria-label="MENU">
-<li id="menu-item-62" class="scroll-to menu-item menu-item-type-custom menu-item-object-custom menu-item-62 default_dropdown  drop_to_right submenu_default_width columns1">
-	<a href="#li-page-top" class="item_link  disable_icon" role="menuitem" tabindex="0">
-		<i class=""></i>
-		<span class="link_content">
-			<span class="link_text">
-				HOME
-			</span><!-- /.link_text -->
-		</span><!-- /.link_content -->
-	</a><!-- /.item_link -->
-</li>
-<li id="menu-item-69" class="scroll-to menu-item menu-item-type-custom menu-item-object-custom menu-item-69 default_dropdown  drop_to_right submenu_default_width columns1">
-	<a href="#services" class="item_link  disable_icon" role="menuitem" tabindex="0">
-		<i class=""></i>
-		<span class="link_content">
-			<span class="link_text">
-				SERVICES
-			</span><!-- /.link_text -->
-		</span><!-- /.link_content -->
-	</a><!-- /.item_link -->
-</li>
-<li id="menu-item-68" class="scroll-to menu-item menu-item-type-custom menu-item-object-custom menu-item-68 default_dropdown  drop_to_right submenu_default_width columns1">
-	<a href="#analysis" class="item_link  disable_icon" role="menuitem" tabindex="0">
-		<i class=""></i>
-		<span class="link_content">
-			<span class="link_text">
-				SEO ANALYSIS
-			</span><!-- /.link_text -->
-		</span><!-- /.link_content -->
-	</a><!-- /.item_link -->
-</li>
-<li id="menu-item-63" class="scroll-to menu-item menu-item-type-custom menu-item-object-custom menu-item-63 default_dropdown  drop_to_right submenu_default_width columns1">
-	<a href="#pricing" class="item_link  disable_icon" role="menuitem" tabindex="0">
-		<i class=""></i>
-		<span class="link_content">
-			<span class="link_text">
-				PRICING
-			</span><!-- /.link_text -->
-		</span><!-- /.link_content -->
-	</a><!-- /.item_link -->
-</li>
-<li id="menu-item-64" class="scroll-to menu-item menu-item-type-custom menu-item-object-custom menu-item-64 default_dropdown  drop_to_right submenu_default_width columns1">
-	<a href="#other-services" class="item_link  disable_icon" role="menuitem" tabindex="0">
-		<i class=""></i>
-		<span class="link_content">
-			<span class="link_text">
-				OTHER SERVICES
-			</span><!-- /.link_text -->
-		</span><!-- /.link_content -->
-	</a><!-- /.item_link -->
-</li>
-	<li class="nav_search_box">
-		<form method="get" class="mega_main_menu_searchform" action="https://trafficano.tech/">
-			<i class="im-icon-search-3 icosearch"></i>
-			<input type="text" class="field" name="s" id="s" />
-			<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
-		</form>
-	</li><!-- class="nav_search_box" -->
-</ul>
-		</div><!-- /class="menu_inner" -->
-	</div><!-- /class="menu_holder" -->
-</div><!-- /id="mega_main_menu" -->
-                    </nav>
+<script>
+  function updateTime() {
+    // Get the current date and time
+    var now = new Date();
 
-    </div>
+    // Get the elements where the current date and time will be displayed
+    var timeElem = document.querySelector('.current-time');
+    var dateElem = document.querySelector('.current-date');
+
+    // Set the text content of the elements to the current date and time
+    timeElem.textContent = now.toLocaleTimeString();
+    dateElem.textContent = now.toLocaleDateString();
+  }
+
+  // Call the updateTime function every second
+  setInterval(updateTime, 1000);
+</script>

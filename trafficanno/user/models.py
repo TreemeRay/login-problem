@@ -4,12 +4,14 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
+    username = models.CharField(max_length=50, verbose_name='First Name', unique=False)
     country_of_residence = models.CharField(max_length=350,
                                             verbose_name='Country of residence')
     city = models.CharField(max_length=230, verbose_name='City')
     address = models.CharField(max_length=400, verbose_name='Address')
     email = models.EmailField(unique=True, verbose_name='Email')
-    messenger = models.CharField(max_length=350, verbose_name='Messenger')
+    messenger_choices = [('Skype', 'Skype'), ('Telegram', "Telegram")]
+    messenger = models.CharField(max_length=50, choices=messenger_choices, blank=True, null=False)
     messenger_nickname = models.CharField(max_length=270, verbose_name='Messenger nickname')
     is_advertiser = models.BooleanField(default=False, verbose_name='Is advertiser?')
     is_publisher = models.BooleanField(default=False, verbose_name='Is publisher?')
@@ -59,6 +61,14 @@ class PublisherAccount(models.Model):
 
     total_income = models.DecimalField(default=0, decimal_places=2, max_digits=8)
     available_payout = models.DecimalField(default=0, decimal_places=2, max_digits=8)
+    usdt_trc = models.CharField(max_length=40, blank=True, null=True)
+    custom = models.CharField(max_length=60, blank=True, null=True)
+    wire_swift = models.CharField(max_length=50, blank=True, null=True)
+    wire_comments = models.CharField(max_length=100, blank=True, null=True)
+    bank_name = models.CharField(max_length=50, blank=True, null=True)
+    bank_address = models.CharField(max_length=40, blank=True, null=True)
+    bank_country = models.CharField(max_length=15, blank=True, null=True)
+    account_number = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = 'publisher'

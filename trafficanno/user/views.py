@@ -1,21 +1,23 @@
 from pyexpat.errors import messages
 
-from django.contrib.auth import get_user_model, login, authenticate, update_session_auth_hash
+from django.contrib.auth import get_user_model, login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, PasswordResetConfirmView
 from django.http import request
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, FormView
 from .forms import AdvertiserSignUpForm, PublisherSignUpForm, PasswordConfirm, EmailAuthenticationForm, \
     ForgotPasswordForm, ResetSetPasswordForm, PublProfileForm, ChangePassword, AdvertProfileForm
 from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.shortcuts import render
+import datetime
 
 User = get_user_model()
 
@@ -90,14 +92,38 @@ class EmailSubmitting(CreateView):
         return render(request, 'user/email_submitting.html')
 
 
-class PasswordSubmit(UpdateView):
-    model = User
-    form_class = PasswordConfirm
-    template_name = 'user/password_confirm.html'
-    success_url = reverse_lazy('sign-up')
+class PasswordSubmit(View):
+    def get(self ,*args ,**kwargs):
+        token = kwargs.get('token')
+        try:
+            uid = force_str(urlsafe_base64_decode(kwargs.get('uidb64')))
+            user = User.objects.get(pk=uid)
+        except(Exception,):
+            user = None
 
-    def get_object(self, queryset=None):
-        return self.request.user
+        form = PasswordConfirm()
+        return render(self.request, 'user/password_confirm.html', {'form': form})
+
+    def post(self, *args , **kwargs):
+        token = kwargs.get('token')
+        try:
+            uid = force_str(urlsafe_base64_decode(kwargs.get('uidb64')))
+            user = User.objects.get(pk=uid)
+        except(Exception,):
+            user = None
+
+        form = PasswordConfirm(self.request.POST, user)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password2']
+            user.set_password(new_password)
+            user.save()
+            login(self.request, user)
+
+            if user.is_advertiser:
+                return redirect(reverse('advert_profile'))
+
+            elif user.is_publisher:
+                return redirect(reverse('publ_profile'))
 
 
 class Login(View):
@@ -237,3 +263,16 @@ class RessetPass(View):
         else:
             form_errors = form.errors.as_data()
             return render(request, 'user/user_inc/publ_profile.html', {'form': form, 'form_errors': form_errors})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+def time_view(request):
+    today = datetime.date.today()
+    context = {
+        'today': today
+    }
+    return render(request, 'advert_profile', context)

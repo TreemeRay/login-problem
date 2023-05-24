@@ -9,29 +9,28 @@
 
 
     <h3><b>THETER (USDT) TRC20 EUR</b></h3>
-    <p>Wallet number: FJFNNfjdksfjnkjFJDSJN</p>
+    <p>Wallet number: {{ request.user.publisher.usdt_trc }}</p>
     <hr>
     <h3><b>CUSTOM</b></h3>
-    <p>account number: aahahahh@gmail.com - Payoner</p>
+    <p>account number: {{ request.user.publisher.custom }}</p>
     <hr>
     <h3><b>Wire USD</b></h3>
-    <p>Swift: ahahhahahahhadsfsdfsdf</p>
-    <p>Comments: Moldincombank lucisii bank</p>
-    <p>Bank name: MICB</p>
-    <p>Bank adress: valea crucii</p>
-    <p>Bank country: MD</p>
-    <p>Account number: MD25MLfsdfsdfdsfsd</p>
+    <p>Swift: {{ request.user.publisher.wire_swift }}</p>
+    <p>Comments: {{ request.user.publisher.wire_comments }}</p>
+    <p>Bank name: {{ request.user.publisher.bank_name }}</p>
+    <p>Bank address: {{ request.user.publisher.bank_address }}</p>
+    <p>Bank country: {{ request.user.publisher.bank_country }}</p>
+    <p>Account number: {{ request.user.publisher.account_number }}</p>
     <hr>
 
     <form action="{% url 'publ_profile_form' %}" method="post" style="margin-bottom: 50px">
         {% csrf_token %}
         {{ form.as_p }}
     </form>
-    <hr>
+    <h3>Resset Password</h3>
     <form action="{% url 'reset_pass' %}" method="post" style="margin-bottom: 50px">
         {% csrf_token %}
         {{ form_pass.as_p}}
-        {{ form_pass.non_field_errors }}
         <button type="submit" class="btn btn-primary">Reset Password</button>
     </form>
 
