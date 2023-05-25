@@ -1,10 +1,11 @@
+import json
 from pyexpat.errors import messages
 
 from django.contrib.auth import get_user_model, login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, PasswordResetConfirmView
-from django.http import request
+from django.http import request, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
@@ -93,7 +94,7 @@ class EmailSubmitting(CreateView):
 
 
 class PasswordSubmit(View):
-    def get(self ,*args ,**kwargs):
+    def get(self, *args, **kwargs):
         token = kwargs.get('token')
         try:
             uid = force_str(urlsafe_base64_decode(kwargs.get('uidb64')))
@@ -104,7 +105,7 @@ class PasswordSubmit(View):
         form = PasswordConfirm()
         return render(self.request, 'user/password_confirm.html', {'form': form})
 
-    def post(self, *args , **kwargs):
+    def post(self, *args, **kwargs):
         token = kwargs.get('token')
         try:
             uid = force_str(urlsafe_base64_decode(kwargs.get('uidb64')))
@@ -202,7 +203,7 @@ class PublProfile(CreateView):
             'traffic_amount': request.user.publisher.traffic_amount
         }
         form = PublProfileForm(initial=users_form)
-        form_pass = ChangePassword(user=request.user, data=request.POST)
+        form_pass = ChangePassword(user=request.user)
 
         return render(request, 'user/user_inc/publ_profile.html', {'form': form, 'form_pass': form_pass})
 
@@ -222,7 +223,7 @@ class AdvertProfile(CreateView):
             'bonus_code': request.user.advertiser.bonus_code
         }
         form = AdvertProfileForm(initial=users_form)
-        form_pass = ChangePassword(user=request.user, data=request.POST)
+        form_pass = ChangePassword(user=request.user)
 
         return render(request, 'user/user_inc/advert_profile.html', {'form': form, 'form_pass': form_pass})
 
@@ -248,21 +249,29 @@ class AdvertFormProfile(View):
             form.save()
 
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
 class RessetPass(View):
-    def get(self, *args, **kwargs):
-        form = ChangePassword()
-        return render(self.request, 'user/user_inc/publ_profile.html', {'form': form})
 
-    def post(self, request, *args, **kwargs):
-        form = ChangePassword(data=request.POST, user=request.user)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
+    def post(self, *args, **kwargs):
+        if is_ajax(self.request):
+            form = ChangePassword(self.request.POST, user=self.request.user)
+            if form.is_valid():
+                data = form.cleaned_data['form']
+                login(self.request, user=self.request.user)
+                return JsonResponse({'success': True, 'message': data}, status=200)
 
+            else:
+                errors = json.loads(json.dumps(form.errors))
+                return JsonResponse({'errors': errors}, status=400)
+
+        if self.request.user.is_advertiser:
+            return redirect(reverse('advert_profile'))
+
+        elif self.request.user.is_publisher:
             return redirect(reverse('publ_profile'))
-        else:
-            form_errors = form.errors.as_data()
-            return render(request, 'user/user_inc/publ_profile.html', {'form': form, 'form_errors': form_errors})
 
 
 def logout_view(request):

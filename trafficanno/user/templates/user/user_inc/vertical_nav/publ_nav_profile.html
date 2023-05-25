@@ -28,11 +28,18 @@
         {{ form.as_p }}
     </form>
     <h3>Resset Password</h3>
-    <form action="{% url 'reset_pass' %}" method="post" style="margin-bottom: 50px">
+    <div class="success-message" style="color: #8ff352;">
+
+    </div>
+    <form action="{% url 'reset_pass' %}" class="pass_change_form" method="post" style="margin-bottom: 50px">
         {% csrf_token %}
         {{ form_pass.as_p}}
+        <div class="invalid-feedback" id="invalid-feedback" style="display: block">
+
+        </div>
         <button type="submit" class="btn btn-primary">Reset Password</button>
     </form>
+
 
 
 
