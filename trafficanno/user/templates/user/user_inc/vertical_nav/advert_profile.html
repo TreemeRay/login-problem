@@ -11,13 +11,40 @@
         {% csrf_token %}
         {{ form.as_p }}
     </form>
-    <h2>Reset Password</h2>
+<h3>Resset Password</h3>
+    <div class="success-message" style="color: #8ff352;">
 
-    <form action="{% url 'reset_pass' %}" method="post" style="margin-bottom: 50px">
-        {% csrf_token %}
-        {{ form_pass.as_p}}
-        {{ form_pass.non_field_errors }}
-        <button type="submit" class="btn btn-primary">Reset Password</button>
-    </form>
+    </div>
+    <form action="{% url 'reset_pass' %}" class="pass_change_form" method="post" style="margin-bottom: 50px">
+    {% csrf_token %}
+    {{ form_pass.non_field_errors }}
+
+    <div class="form-group">
+        <label for="id_old_password">Old password:</label>
+        {{ form_pass.old_password }}
+        <div class="invalid-feedback" style="display: block">
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id_new_password1">New password:</label>
+        {{ form_pass.new_password1 }}
+        <div class="invalid-feedback" style="display:block;">
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id_new_password2">New password confirmation:</label>
+        {{ form_pass.new_password2 }}
+        <div class="invalid-feedback" style="display: block">
+
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Reset Password</button>
+</form>
+
 </body>
 </html>

@@ -257,11 +257,12 @@ class RessetPass(View):
 
     def post(self, *args, **kwargs):
         if is_ajax(self.request):
-            form = ChangePassword(self.request.POST, user=self.request.user)
+            form = ChangePassword(self.request.user, self.request.POST)
             if form.is_valid():
-                data = form.cleaned_data['form']
+                success_msg = 'You successfully changed your password'
+                form.save()
                 login(self.request, user=self.request.user)
-                return JsonResponse({'success': True, 'message': data}, status=200)
+                return JsonResponse({'success': True, 'message': success_msg}, status=200)
 
             else:
                 errors = json.loads(json.dumps(form.errors))
